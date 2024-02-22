@@ -3,3 +3,4 @@
 /main/__pycache__/
 /main/migrations/
 *.un~
+.gitignore~
