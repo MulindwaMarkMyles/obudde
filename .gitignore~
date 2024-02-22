@@ -1,5 +1,0 @@
-/weather/__pycache__/
-*.sqlite3
-/main/__pycache__/
-/main/migrations/
-*.un~
