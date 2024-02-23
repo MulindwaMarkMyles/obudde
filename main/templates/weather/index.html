@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>OBUDDE</title>
+</head>
+<body>
+	<form method="POST">
+		{% csrf_token %}
+		<input type="text" name="city_one" value="" placeholder="City One">
+		<input type="text" name="city_two" value="" placeholder="City Two">
+		<button type="submit">Compare Weather</button>
+
+	</form>
+
+	<div class="comparison-container">
+		{% if weather_data_one %}
+		<div class="city-container">
+			{% include 'weather/city_weather.html'  with weather_data=weather_data_one daily_forecasts=daily_forecasts_one %}
+		</div>
+		{% endif %}
+		{% if weather_data_two %}
+		<div class="city-container">
+			{% include 'weather/city_weather.html'  with weather_data=weather_data_one daily_forecasts=daily_forecasts_one %}
+		</div>
+		{% endif %}
+	</div>
+</body>
+</html>

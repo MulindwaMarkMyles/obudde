@@ -4,9 +4,9 @@ import requests, datetime
 
 # Create your views here.
 def home(request):
-	API_KEY  = open("../API_KEY", 'r').read()
+	API_KEY  = open("./API_KEY", 'r').read()
 	current_weather_url = "https://api.openweathermap.org/data/2.5/weather?q={}&appid={}"
-	forecast_url = "https://api.openweathermap.org/data/2.5/onecall?lat={}&lon={}&exclude=current,minutely,hourly,alerts&appid={}"
+	forecast_url = "https://api.openweathermap.org/data/2.5/weather?q=${}&appid=${}&units=metric"
 
 	if request.method == 'POST':
 		city_one = request.POST.get("city_one")
@@ -25,15 +25,14 @@ def home(request):
 				"weather_data_two": weather_data_two,
 				"daily_forecasts_two": daily_forecasts_two
 		}
-		
+		print(context)
 		return render(request, "weather/index.html")
 	else:
 		return render(request, "weather/index.html")
 
 def fetch_weather_and_forecast(city, api_key, current_weather_url, forecast_url):
 	response = requests.get(current_weather_url.format(city, api_key)).json()
-	lat, lon = response['coord']['lat'], response['coord']['lon']
-	forecast_response = requests.get(forecast_url.format(lat, lon, api_key)).json()
+	forecast_response = requests.get(forecast_url.format(city, api_key)).json()
 
 	weather_data = {
 		"city":city,
@@ -43,13 +42,14 @@ def fetch_weather_and_forecast(city, api_key, current_weather_url, forecast_url)
 	}
 
 	daily_forecasts = []
-	for daily_data in forecast_response['daily'][:5]:
-		daily_forecasts.append(({
-				"day":datetime.datetime.fromtimestamp(daily_data["dt"]).strftime("%A"),
-				"min_temp": round(daily_data['temp']['min'] - 273.15, 2),
-				"min_temp": round(daily_data['temp']['max'] - 273.15, 2),
-				"description": daily_data['weather'][0]['description'],
-				"icon": daily_data['weather'][0]["icon"]
-			}))
+	# # print(forecast_response)
+	# for daily_data in forecast_response['daily'][:5]:
+	# 	daily_forecasts.append(({
+	# 			"day":datetime.datetime.fromtimestamp(daily_data["dt"]).strftime("%A"),
+	# 			"min_temp": round(daily_data['temp']['min'] - 273.15, 2),
+	# 			"min_temp": round(daily_data['temp']['max'] - 273.15, 2),
+	# 			"description": daily_data['weather'][0]['description'],
+	# 			"icon": daily_data['weather'][0]["icon"]
+	# 		}))
 
 	return weather_data, daily_forecasts
