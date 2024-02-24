@@ -3,6 +3,10 @@ import requests, datetime
 
 
 # Create your views here.
+def fahrenheit_to_celsius(fahrenheit):
+        celsius = (fahrenheit - 32) * 5/9
+        return celsius
+
 def home(request):
 	API_KEY  = open("./API_KEY", 'r').read()
 	current_weather_url = "https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=imperial"
@@ -26,7 +30,7 @@ def fetch_weather_and_forecast(city, api_key, current_weather_url, forecast_url)
 
 	weather_data = {
 		"city":city,
-		"temperature": round(response['main']['temp'], 2),
+		"temperature": round(fahrenheit_to_celsius(response['main']['temp']), 2),
 		"description": response['weather'][0]['description'],
 		"icon": response['weather'][0]["icon"]
 	}
@@ -35,8 +39,8 @@ def fetch_weather_and_forecast(city, api_key, current_weather_url, forecast_url)
 	for daily_data in forecast_response['list'][:7]:
 		info = {
 				"day":datetime.datetime.fromtimestamp(daily_data["dt"]).strftime("%A"),
-				"min_temp": round(daily_data['main']['temp_min'], 2),
-				"max_temp": round(daily_data['main']['temp_max'], 2),
+				"min_temp": round(fahrenheit_to_celsius(daily_data['main']['temp_min']),2),
+				"max_temp": round(fahrenheit_to_celsius(daily_data['main']['temp_max']), 2),
 				"description": daily_data['weather'][0]['description'],
 				"icon": daily_data['weather'][0]["icon"]
 			}

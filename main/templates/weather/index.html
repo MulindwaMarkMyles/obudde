@@ -17,8 +17,8 @@
 	<div class="container">
 		<div class="city-container">
                         {% if weather_data %}
-                                <h1>{{ weather_data.city }}</h1>
-                                <h2>{{ weather_data.temperature }}</h2>
+                                <h1>{{ weather_data.city }} </h1>
+                                <h2>{{ weather_data.temperature }} °C</h2>
                                 <p>{{ weather_data.description }}</p>
                                 <img src="http://openweathermap.org/img/w/{{ weather_data.icon }}.png" alt="{{ weather_data.description }}">
                         {% endif %}
