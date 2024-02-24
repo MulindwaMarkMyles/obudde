@@ -4,3 +4,4 @@
 /main/migrations/
 *.un~
 .gitignore~
+*.txt
