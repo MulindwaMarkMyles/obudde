@@ -25,7 +25,7 @@ def home(request):
 				# "weather_data_two": weather_data_two,
 				# "daily_forecasts_two": daily_forecasts_two
 		}
-		# print(context)
+	
 		return render(request, "weather/index.html")
 	else:
 		return render(request, "weather/index.html")
@@ -43,21 +43,16 @@ def fetch_weather_and_forecast(city, api_key, current_weather_url, forecast_url)
 
 	daily_forecasts = []
 	for daily_data in forecast_response['list'][:7]:
-		info = ({
+		info = {
 				"day":datetime.datetime.fromtimestamp(daily_data["dt"]).strftime("%A"),
 				"min_temp": round(daily_data['main']['temp_min'], 2),
 				"max_temp": round(daily_data['main']['temp_max'], 2),
 				"description": daily_data['weather'][0]['description'],
 				"icon": daily_data['weather'][0]["icon"]
-			})
+			}
 	if info not in daily_forecasts:
 		daily_forecasts.append(info)
 		
-	for key in weather_data: print(key, ":", weather_data[key])
-	print("\n\n")
-	for forecast in daily_forecasts:
-		for key in forecast: print(key, ":", forecast[key])
-		print("\n")
 	return weather_data, daily_forecasts
 
         
