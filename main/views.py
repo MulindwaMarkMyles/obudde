@@ -10,23 +10,13 @@ def home(request):
 
 	if request.method == 'POST':
 		city_one = request.POST.get("city_one")
-		# city_two = request.POST.get("city_two", None)
 
-		weather_data_one , daily_forecasts_one = fetch_weather_and_forecast(city_one, API_KEY, current_weather_url, forecast_url)
-
-		# if city_two:
-		# 	weather_data_one , daily_forecasts_one = fetch_weather_and_forecast(city_two, API_KEY, current_weather_url, forecast_url)
-		# else:
-		# 	weather_data_two, daily_forecasts_two = None, None
-
+		weather_data , daily_forecasts = fetch_weather_and_forecast(city_one, API_KEY, current_weather_url, forecast_url)
 		context = {
-				"weather_data_one": weather_data_one,
-				"daily_forecasts_one": daily_forecasts_one,
-				# "weather_data_two": weather_data_two,
-				# "daily_forecasts_two": daily_forecasts_two
+				"weather_data": weather_data,
+				"daily_forecasts": daily_forecasts,
 		}
-	
-		return render(request, "weather/index.html")
+		return render(request, "weather/index.html", context)
 	else:
 		return render(request, "weather/index.html")
 
