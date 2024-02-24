@@ -4,4 +4,4 @@
 /main/migrations/
 *.un~
 .gitignore~
-*.txt
+API_KEY
