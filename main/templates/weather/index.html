@@ -12,7 +12,6 @@
 		{% csrf_token %}
 		<input type="text" name="city_one" value="" placeholder="City">
 		<button type="submit">Get Weather</button>
-
 	</form>
 
 	<div class="container">
@@ -23,10 +22,12 @@
                                 <p>{{ weather_data.description }}</p>
                                 <img src="http://openweathermap.org/img/w/{{ weather_data.icon }}.png" alt="{{ weather_data.description }}">
                         {% endif %}
+                </div>
 
+                <div class="forecast-container">
                         {% if daily_forecasts %}
                         <h2>Tomorrow!</h2>
-                        <div class="forecast-container">
+                        <div class="forecasts">
                                 {% for forecast in daily_forecasts %}
                                         <div class="forecast">
                                                 <h3>{{ forecast.day }}</h3>
@@ -37,6 +38,7 @@
                                 {% endfor %}
                         </div>
                         {% endif %}
+                </div>
 		</div>
 	</div>
 </body>
